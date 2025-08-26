@@ -1,0 +1,24 @@
+{
+    "name": "CVE-Reproducer Dev Container",
+    "build": {
+      "dockerfile": "../Dockerfile",
+      "context": ".."
+    },
+    "mounts": [
+      "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+    ],
+    "customizations": {
+      "env": {},
+      "vscode": {
+        "extensions": [ 
+            "ms-azuretools.vscode-docker",
+            "ms-vscode.vscode-remote-extensionpack",
+            "ms-python.python"
+        ],
+        "settings": {
+            "terminal.integrated.shell.linux": "/bin/bash"
+        }
+      }
+    },
+    "forwardPorts": []
+}

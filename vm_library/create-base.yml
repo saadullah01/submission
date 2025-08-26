@@ -1,0 +1,50 @@
+# vagrant/init.yml
+---
+- hosts: all
+  become: false
+
+  tasks:
+  - name: Allow jammy to run sudo without password
+    become: true
+    ansible.builtin.lineinfile:
+      dest: /etc/sudoers.d/jammy
+      line: 'jammy ALL=(ALL) NOPASSWD: ALL'
+      create: yes
+      mode: '0440'
+
+  - name: Ensure Python and zip is installed
+    become: true
+    apt:
+      pkg:
+        - python3
+        - python3-pip
+        - zip
+        - tree
+      update_cache: yes
+    
+  - name: Install nvm
+    ansible.builtin.shell: >
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.39.1/install.sh | bash
+    args:
+      executable: /bin/bash
+      chdir: "$HOME"
+      creates: "$HOME/.nvm/nvm.sh"
+
+  - name: Install node
+    shell: >
+      . $HOME/.nvm/nvm.sh && nvm install 20.18.0
+    args:
+      executable: /bin/bash
+      chdir: "$HOME"
+      creates: "$HOME/.nvm/versions/20.18.0"
+
+  - name: Copy AI agent code
+    synchronize:
+      src: ../src/
+      dest: /home/jammy/src/
+      recursive: yes
+
+  - name: Install agentlib
+    shell: |
+      cd /home/jammy/src/agentlib/
+      pip install -e .

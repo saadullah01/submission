@@ -1,0 +1,6 @@
+images/*
+shared/*
+nohup*
+
+!images/.keep
+!shared/.keep

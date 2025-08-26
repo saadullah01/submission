@@ -1,0 +1,52 @@
+---
+- hosts: all
+  become: false
+
+  vars:
+    shared_dir_enabled: true
+    test_case: "CVE-XXXX-XXXX"
+    cve_json: "CVE-XXXX-XXXX.json"
+
+  tasks:
+    - name: Ensure 9p mount point exists
+      become: true
+      file:
+        path: /shared
+        state: directory
+
+    - name: Mount host folder via virtio-fs (9p)
+      become: true
+      mount:
+        path: /shared
+        src: hostshare
+        fstype: 9p
+        opts: trans=virtio,version=9p2000.L,access=any
+        state: mounted
+        dump: 0
+        passno: 0
+      when: shared_dir_enabled
+      
+    - name: Make the shared root world-writable
+      become: true
+      file:
+        path: /shared
+        mode: "0777"
+
+    - name: Copy AI agent code
+      synchronize:
+        src: ../src/
+        dest: /home/jammy/src/
+        recursive: yes
+
+    - name: Run the agent
+      shell: |
+        cd /home/jammy/src
+        mkdir -p /shared/{{ test_case }}
+        bash -ilc "export ENV_PATH=/shared/.env && python3 -u main.py --cve {{ test_case }} --json {{ cve_json }} --run-type {{ run_type }} >> /shared/{{ test_case }}/log.txt 2>&1"
+        
+    - name: Unmount host folder via virtio-fs (9p)
+      become: true
+      mount:
+        path: /shared
+        state: unmounted
+      when: shared_dir_enabled

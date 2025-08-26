@@ -1,0 +1,12 @@
+#cloud-config
+ssh_pwauth: True
+chpasswd:
+  expire: false
+  users:
+  - {name: jammy, password: jammy, type: text}
+users:
+  - name: jammy
+    groups: users, sudo
+    shell: /usr/bin/bash
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDrTveF0pVgb4MXqszUj4aXQpQzS47CZTBBhFNqLK/StrOO4NBQfAleHC5p8/ySlqvwo3hiEbOja8Cgv1z6Cy7l9m2bjEqC8S3sNOo4eioYhqSjtZmtvn+RIvjfYOsbbzqqO73iav6Kll2+unk1asdkIhqXYo+KUG8IdkpqZQQ60RszMaTFRYszg1IyPL2VtdLy2mNCFDbk26kfJdYNCFptFhp3Kr3CNbrYAIMCbb8ew9vJgIdV9fnvCsIgTwQCIALCzO9W3jJAMFkKGufVXwiXk8Zy3aQuPPvVMuhxnkZH/cFKY+Pvhs+cWqLJ8S+jlwXozqBf8ZT6B1Es5KHt9glwatz+RajViumi8asksBuprTnXwd8OmokIjOcVAeyuBP7kAxCdHmGZwOHzegpGSH9YnfQYKu+PhSUgyHrTqy0vix0qcJcrrbctDa+Ms8mgX9b6uMP0GNrCbxwTbI2qnee3fSth7VQDEZCvst7axZda80nkf811jrRoqkg3a/ePO3E= jammy@jammy.com
