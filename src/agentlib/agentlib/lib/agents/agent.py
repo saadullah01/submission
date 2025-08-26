@@ -1440,7 +1440,7 @@ Use this if you want to respond directly to the human. Markdown code snippet for
             import traceback
 
             traceback.print_exc()
-            self.warn(f"Failed to check budget, please tell amy: {str(e)}")
+            self.warn(f"Failed to check budget, please tell us: {str(e)}")
 
         def flush_event_dumper():
             try:
@@ -1449,7 +1449,7 @@ Use this if you want to respond directly to the human. Markdown code snippet for
             except Exception as e:
                 import traceback
                 traceback.print_exc()
-                self.warn(f"Failed to record event! Please tell amy: {str(e)}")
+                self.warn(f"Failed to record event! Please tell us: {str(e)}")
 
         num_tries = 0
         while True:

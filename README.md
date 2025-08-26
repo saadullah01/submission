@@ -2,7 +2,7 @@
 
 An LLM-based multi-agent framework for end-to-end reproduction of CVEs.
 
-See end-to-end reproduction logs and outputs of CVE-2024-4340 [here](src/data/CVE-2024-4340) and Figure 2 in the paper.
+See end-to-end reproduction logs and outputs of CVE-2024-4340 [here](src/results/CVE-2024-4340) and Figure 2 in the paper.
 
 # 🏃‍♂️ How to Run 
 ## a) In DevContainer
