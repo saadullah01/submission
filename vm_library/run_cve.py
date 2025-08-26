@@ -24,8 +24,6 @@ def main():
                         help="The SSH port for the VM")
     parser.add_argument("-t", "--type", required=False, 
                         help="The type of run: build, exploit, verify")
-    parser.add_argument("-ak", "--anthropic_key", required=False, type=str, default=None,
-                        help="Anthropic API key if using Anthropic models")
     args = parser.parse_args()
     
     cve = args.cve
@@ -51,7 +49,6 @@ def main():
     # Setup env for the run
     shutil.copyfile(os.path.dirname(os.path.abspath(__file__))+"/../src/.env",f"{shared_dir}/.env")
     with open(f"{shared_dir}/.env",'a') as f:
-        print(f'\nANTHROPIC_API_KEY=\"{args.anthropic_key}\"', file=f)
         print(f'\nMODEL=\"{model}\"', file=f)
     
     shutil.copyfile("inventory.ini",f"{inv_path}")

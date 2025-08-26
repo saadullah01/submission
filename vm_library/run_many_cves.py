@@ -18,8 +18,6 @@ if __name__== "__main__":
                         help="Whether to use snapshots")
     parser.add_argument("-d", "--data", required=True, type=str,
                         help="Path to the CVE data file")
-    parser.add_argument("-ak", "--anthropic_key", required=False, type=str, default=None,
-                        help="Anthropic API key if using Anthropic models")
     args = parser.parse_args()
 
     cves=[]
@@ -46,7 +44,6 @@ if __name__== "__main__":
                         "-j", f"./{args.data}",
                         "-m", args.model,
                         "-p", str(2222+args.index),
-                        "-ak", args.anthropic_key,
                         # Change
                         "-n", f"{args.model}-machine{str(args.index)}",
                         # Change
